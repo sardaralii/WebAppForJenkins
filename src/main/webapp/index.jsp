@@ -4,7 +4,7 @@
 
 <marquee>ABC ABC   ABC PQR   KK !!!    </marquee>
 
-<p> this is a paragraph!!xyzxyz !!!!!</p>  
+<p> this is a paragraph!! !!!!!</p>  
 </body>
 </html>
 
