@@ -1,35 +1,39 @@
 pipeline {
-    agent any // You can specify a specific agent or label here if needed
+    agent any
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from your Git repository
-                // Replace 'your-git-repo-url' with the actual URL of your Git repository
-                // and 'your-git-credentials-id' with the ID of your Git credentials configured in Jenkins
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
-                          userRemoteConfigs: [[url: 'https://github.com/sardaralii/webAppforJenkins.git']],
-                          credentialsId: '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'])
+                git branch: 'main', url: 'https://github.com/sardaralii/webAppforJenkins.git'
             }
         }
-        
+
         stage('Build') {
             steps {
-                // Use the Maven Docker image to build the project
-                // Replace 'maven:3.9.3' with the appropriate Docker image if needed
-                container('maven:3.9.3') {
-                    sh 'mvn clean package'
-                }
+                sh 'mvn clean package'
             }
         }
-        
+
         stage('Test') {
             steps {
-                // Use the Maven Docker image to run the tests
-                container('maven:3.9.3') {
-                    sh 'mvn test'
-                }
+                sh 'mvn test'
             }
+        }
+
+        // Add more stages as needed (e.g., deployment, integration tests, etc.)
+    }
+
+    post {
+        always {
+            // Clean up and perform any post-build tasks
+        }
+
+        success {
+            // Actions to perform when the build and tests are successful
+        }
+
+        failure {
+            // Actions to perform when the build or tests fail
         }
     }
 }
