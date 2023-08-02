@@ -2,38 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/sardaralii/webAppforJenkins.git'
+                // Clone the Git repository containing your Java application
+                // Replace 'your-repo-url' with the actual URL of your repository
+                git 'https://github.com/sardaralii/webAppforJenkins.git'
             }
         }
 
         stage('Build') {
             steps {
+                // Clean and build the Java application using Maven
                 sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
+                // Run tests using Maven
                 sh 'mvn test'
             }
-        }
-
-        // Add more stages as needed (e.g., deployment, integration tests, etc.)
-    }
-
-    post {
-        always {
-            // Clean up and perform any post-build tasks
-        }
-
-        success {
-            // Actions to perform when the build and tests are successful
-        }
-
-        failure {
-            // Actions to perform when the build or tests fail
         }
     }
 }
